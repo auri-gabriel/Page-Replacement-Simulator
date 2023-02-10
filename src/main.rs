@@ -9,29 +9,29 @@ fn main() {
         "swim.trace",
         "bigone.trace",
     ];
-    let tamanhos_quadro = vec![4096, 8192, 16384, 32768];
+    let frame_sizes = vec![4096, 8192, 16384, 32768];
 
     for trace in traces.iter() {
-        for tamanho_quadro in tamanhos_quadro.iter() {
-            let mut pr = Memory::new(100, *tamanho_quadro);
+        for frame_size in frame_sizes.iter() {
+            let mut pr = Memory::new(100, *frame_size);
             pr.simulate(trace, "LRU");
             println!(
                 "Number of page faults with LRU and frame size {} in trace {}: {}",
-                tamanho_quadro, trace, pr.page_faults
+                frame_size, trace, pr.page_faults
             );
 
-            let mut pr = Memory::new(100, *tamanho_quadro);
+            let mut pr = Memory::new(100, *frame_size);
             pr.simulate(trace, "FIFO");
             println!(
                 "Number of page faults with FIFO and frame size {} in trace {}: {}",
-                tamanho_quadro, trace, pr.page_faults
+                frame_size, trace, pr.page_faults
             );
 
-            let mut pr = Memory::new(100, *tamanho_quadro);
+            let mut pr = Memory::new(100, *frame_size);
             pr.simulate(trace, "VMS");
             println!(
                 "Number of page faults with VMS and frame size {} in trace {}: {}",
-                tamanho_quadro, trace, pr.page_faults
+                frame_size, trace, pr.page_faults
             );
         }
     }
