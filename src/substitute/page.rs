@@ -1,5 +1,6 @@
 use std::time::Instant;
 
+#[derive(Clone, Copy)]
 pub struct Page {
     pub page_number: i32,
     pub frame_number: i32,

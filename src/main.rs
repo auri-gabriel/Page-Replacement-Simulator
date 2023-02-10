@@ -13,21 +13,21 @@ fn main() {
 
     for trace in traces.iter() {
         for tamanho_quadro in tamanhos_quadro.iter() {
-            let pr = Memory::new(100, *tamanho_quadro);
+            let mut pr = Memory::new(100, *tamanho_quadro);
             pr.simular(trace, "LRU");
             println!(
                 "Número de falhas de página com LRU e tamanho de quadro {} no trace {}: {}",
                 tamanho_quadro, trace, pr.page_faults
             );
 
-            let pr = Memory::new(100, *tamanho_quadro);
+            let mut pr = Memory::new(100, *tamanho_quadro);
             pr.simular(trace, "FIFO");
             println!(
                 "Número de falhas de página com FIFO e tamanho de quadro {} no trace {}: {}",
                 tamanho_quadro, trace, pr.page_faults
             );
 
-            let pr = Memory::new(100, *tamanho_quadro);
+            let mut pr = Memory::new(100, *tamanho_quadro);
             pr.simular(trace, "VMS");
             println!(
                 "Número de falhas de página com VMS e tamanho de quadro {} no trace {}: {}",

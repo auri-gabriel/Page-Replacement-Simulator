@@ -55,30 +55,16 @@ impl Memory {
 
             if !found {
                 if self.memory.len() == self.size {
-                    let page = if algorithm == "LRU" {
-                        self.memory
-                            .iter()
-                            .min_by_key(|p| p.last_access)
-                            .unwrap()
-                            .clone()
-                    } else {
-                        &if algorithm == "FIFO" {
-                            self.memory.pop_front().unwrap()
-                        } else if algorithm == "VMS" {
-                            let page = self
-                                .memory
-                                .iter()
-                                .min_by_key(|p| p.last_access)
-                                .unwrap()
-                                .clone();
-                            for p in &mut self.memory {
-                                p.referenced = false;
-                            }
-                            page
-                        }
+                    let page_to_remove = match algorithm {
+                        "LRU" => self.remove_page_by_LRU(),
+                        "FIFO" => self.remove_page_by_FIFO(),
+                        "VMS" => self.remove_page_by_VMS(),
+                        _ => panic!("Invalid algorithm"),
                     };
+
                     self.memory.retain(|p| {
-                        p.page_number != page.page_number || p.frame_number != page.frame_number
+                        p.page_number != page_to_remove.page_number
+                            || p.frame_number != page_to_remove.frame_number
                     });
                     self.page_faults += 1;
                 }
@@ -91,5 +77,28 @@ impl Memory {
                 }
             }
         }
+    }
+
+    fn remove_page_by_LRU(&mut self) -> Page {
+        self.memory
+            .iter()
+            .min_by_key(|p| p.last_access)
+            .unwrap()
+            .clone()
+    }
+
+    fn remove_page_by_FIFO(&mut self) -> Page {
+        self.memory.pop_front().unwrap()
+    }
+
+    fn remove_page_by_VMS(&mut self) -> Page {
+        for p in &mut self.memory {
+            p.referenced = false;
+        }
+        self.memory
+            .iter()
+            .min_by_key(|p| p.last_access)
+            .unwrap()
+            .clone()
     }
 }
