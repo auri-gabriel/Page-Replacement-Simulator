@@ -26,7 +26,7 @@ impl Memory {
         }
     }
 
-    pub fn simular(&mut self, filename: &str, algorithm: &str) {
+    pub fn simulate(&mut self, filename: &str, algorithm: &str) {
         let file = File::open(filename).expect("File not found");
         let reader = BufReader::new(file);
 
