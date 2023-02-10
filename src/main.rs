@@ -1,5 +1,3 @@
-use std::vec::Vec;
-
 mod substitute;
 use substitute::Memory;
 
