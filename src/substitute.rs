@@ -56,9 +56,9 @@ impl Memory {
             if !found {
                 if self.memory.len() == self.size {
                     let page_to_remove = match algorithm {
-                        "LRU" => self.remove_page_by_LRU(),
-                        "FIFO" => self.remove_page_by_FIFO(),
-                        "VMS" => self.remove_page_by_VMS(),
+                        "LRU" => self.remove_page_by_lru(),
+                        "FIFO" => self.remove_page_by_fifo(),
+                        "VMS" => self.remove_page_by_vms(),
                         _ => panic!("Invalid algorithm"),
                     };
 
@@ -79,7 +79,7 @@ impl Memory {
         }
     }
 
-    fn remove_page_by_LRU(&mut self) -> Page {
+    fn remove_page_by_lru(&mut self) -> Page {
         self.memory
             .iter()
             .min_by_key(|p| p.last_access)
@@ -87,11 +87,11 @@ impl Memory {
             .clone()
     }
 
-    fn remove_page_by_FIFO(&mut self) -> Page {
+    fn remove_page_by_fifo(&mut self) -> Page {
         self.memory.pop_front().unwrap()
     }
 
-    fn remove_page_by_VMS(&mut self) -> Page {
+    fn remove_page_by_vms(&mut self) -> Page {
         for p in &mut self.memory {
             p.referenced = false;
         }
