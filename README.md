@@ -1,5 +1,7 @@
 # Page Replacement Algorithm Simulator
 
+## **⚠️ Disclaimer: This project is for educational purposes only.**
+
 A program written in Rust that simulates the behavior of three page replacement algorithms:
 - Least Recently Used (LRU)
 - First In First Out (FIFO)
@@ -17,21 +19,24 @@ The inputs are hardcoded in the `main.rs`
 ### Output
 The program prints the number of page faults for each combination of algorithm and trace file.
 
-#### Saving the Results
-
-To save the results, you can run it with the following command:
-
-`cargo run > output.txt`
-
-This will save the output of the program to a file named `output.txt`.
-
 ## Installation
 To run this program, you will need to have the latest version of Rust installed. You can follow the instructions on the [Rust website](https://www.rust-lang.org/tools/install) to install Rust. 
 
 Once you have Rust installed, clone this repository and navigate to the project directory. Then, run the following command:
 
-`cargo run`
+```
+cargo run
+```
 
+#### Saving the Results
+
+To save the results, you can run it with the following command:
+
+```
+cargo run > output.txt
+```
+
+This will save the output of the program to a file named `output.txt`.
 
 ## File Structure
 The program consists of the following files:
