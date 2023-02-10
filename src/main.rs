@@ -1,11 +1,40 @@
-use std::env;
-use std::fs;
+use std::vec::Vec;
+
+mod substitute;
+use substitute::Memory;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
+    let traces = vec![
+        "bzip.trace",
+        "gcc.trace",
+        "sixpack.trace",
+        "swim.trace",
+        "bigone.trace",
+    ];
+    let tamanhos_quadro = vec![4096, 8192, 16384, 32768];
 
-    let file_path = &args[1];
+    for trace in traces.iter() {
+        for tamanho_quadro in tamanhos_quadro.iter() {
+            let pr = Memory::new(100, *tamanho_quadro);
+            pr.simular(trace, "LRU");
+            println!(
+                "Número de falhas de página com LRU e tamanho de quadro {} no trace {}: {}",
+                tamanho_quadro, trace, pr.page_faults
+            );
 
-    let contents = fs::read_to_string(file_path).expect("Should have been able to read the file");
-    println!("{contents}");
+            let pr = Memory::new(100, *tamanho_quadro);
+            pr.simular(trace, "FIFO");
+            println!(
+                "Número de falhas de página com FIFO e tamanho de quadro {} no trace {}: {}",
+                tamanho_quadro, trace, pr.page_faults
+            );
+
+            let pr = Memory::new(100, *tamanho_quadro);
+            pr.simular(trace, "VMS");
+            println!(
+                "Número de falhas de página com VMS e tamanho de quadro {} no trace {}: {}",
+                tamanho_quadro, trace, pr.page_faults
+            );
+        }
+    }
 }
